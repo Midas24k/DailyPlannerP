@@ -1,65 +1,58 @@
-
-var pastDue = document.getElementById('past')
-var presentDue = document.getElementById('present')
-var futureDue = document.getElementById('future')
-var saveButton = document.getElementById('btn saveBtn')
-
-addEventListener
+$(document).ready(function(){
 
 
-function updateCurrentDay() {
+
   var realTime = dayjs().format('MMM D, YYYY h:mm:ss a');
-  document.getElementById('currentDay').textContent = realTime;
-}
+  $('#currentDay').text(realTime);
 
-setInterval(updateCurrentDay, 1000);
-updateCurrentDay();
+function updateBlock(){
 
-console.log("time Start")
+  var time= dayjs().hour()
 
-function updateColors() {
-  var timeBlocks = document.querySelectorAll("time-block");
-
-  timeBlocks.forEach(block => {
-    var blockHour = parseInt(block.dataset.hour);
-
-    if (blockHour < realTime) {
-      block.classList.add('past');
-      block.classList.remove('present', 'future');
-    } else if (blockHour === realTime) {
-      block.classList.add('present');
-      block.classList.remove('past', 'future');
+  $('.time-block').each(function(){
+    var blockHour = parseInt($(this).attr('id').split('-')[1]);
+    
+    if (blockHour < time) {
+      $(this).addClass('past');
+      
+    } else if (blockHour === time) {
+      $(this).addClass('present');
+      $(this).removeClass('past');
     } else {
-      block.classList.add('future');
-      block.classList.remove('past', 'present');
+      $(this).addClass('future');
+      $(this).removeClass('past');
+      $(this).removeClass('present');
     }
-    console.log("im reading")
+    
   });
-
 }
 
-setInterval(updateColors, 60000);
-updateColors();
-
-function saveNote() {
-  var myContent = document.getElementById("mytext").value;
-  localStorage.setItem("myContent", myContent);
-}
-function loadNote() {
-  var myContent = localStorage.getItem("myContent");
-  document.getElementById("mytext").value = myContent;
-  setInterval(loadNote, 1000);
-}
+updateBlock()
+setInterval(updateBlock, 15000)
 
 
 
+$('.saveBtn').on("click" ,function () {
+  var key = $(this).parent().attr('id')
+  var value = $(this).siblings('.description').val()
+ 
+  
+  localStorage.setItem(key,value)
+});
+
+$("#hour-9 .description").val(localStorage.getItem('hour-9'))
+$("#hour-10 .description").val(localStorage.getItem('hour-10'))
+$("#hour-11 .description").val(localStorage.getItem('hour-11'))
+$("#hour-12 .description").val(localStorage.getItem('hour-12'))
+$("#hour-13 .description").val(localStorage.getItem('hour-13'))
+$("#hour-14 .description").val(localStorage.getItem('hour-14'))
+$("#hour-15 .description").val(localStorage.getItem('hour-15'))
+$("#hour-16 .description").val(localStorage.getItem('hour-16'))
+$("#hour-17 .description").val(localStorage.getItem('hour-17'))
 
 
+})
 
-
-
-
-// saveButton.addEventListener('click', savetext)
 
 
 
