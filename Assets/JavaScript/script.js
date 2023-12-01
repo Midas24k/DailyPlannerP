@@ -1,7 +1,9 @@
-var blockTime = document.getElementById("hour")
+
 var pastDue = document.getElementById('past')
 var presentDue = document.getElementById('present')
 var futureDue = document.getElementById('future')
+var saveButton = document.getElementById('btn saveBtn')
+
 
 
 
@@ -14,6 +16,31 @@ setInterval(updateCurrentDay, 1000);
 updateCurrentDay();
 
 
+function updateColors(realTime){
+var timeBlocks = document.querySelectorAll ("time-block");
+
+  timeBlocks.forEach(block => {
+    var blockHour = parseInt(block.dataset.hour);
+
+    if (blockHour < realTime) {
+      block.classList.add('past');
+      block.classList.remove('present', 'future');
+    } else if (blockHour === realTime) {
+      block.classList.add('present');
+      block.classList.remove('past', 'future');
+     }else{
+      block.classList.add('future');
+      block.classList.remove('past', 'present');
+    }
+    console.log("im reading")
+  });
+  
+}
+    
+  //  setInterval(updateColors, 60000);
+  //  updateColors();
+      
+  
 
 
 
@@ -23,6 +50,8 @@ updateCurrentDay();
 
 
 
+
+// saveButton.addEventListener('click', savetext)
 
 
 
